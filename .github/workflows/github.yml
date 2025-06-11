@@ -1,0 +1,54 @@
+
+name: API Test Automation
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Runs twice: daily at 2 AM UTC and Monday/Thursday at 2 PM UTC
+    - cron: '0 2 * * *'     # Daily at 2 AM UTC
+    - cron: '0 14 * * 1,4'  # Monday and Thursday at 2 PM UTC
+  workflow_dispatch:  # Allows manual trigger from GitHub UI
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      issues: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+
+      - name: Run API Tests
+        run: mvn clean test -DsuiteXmlFile=api -X
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            test-output/reports/
+            target/surefire-reports/
+            logs/
+
+      - name: Publish Test Report
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: TestNG Results
+          path: target/surefire-reports/junitreports/TEST-*.xml
+          reporter: java-junit
+
