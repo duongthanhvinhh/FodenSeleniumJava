@@ -15,7 +15,7 @@
             </run>
         </groups>
         <classes>
-            <class name="org.foden.tests.LoginTests"/>
+            <class name="org.foden.tests.e2e.LoginTests"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
