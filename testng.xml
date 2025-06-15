@@ -6,7 +6,9 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="Test" thread-count="4" parallel="methods">
         <classes>
-            <class name="org.foden.tests.LoginTests"/>
+            <class name="org.foden.tests.e2e.LoginTests"/>
+            <class name="org.foden.tests.api.AuthApisTests"/>
+            <class name="org.foden.tests.api.UserManagementApisTests"/>
         </classes>
     </test>
 </suite>

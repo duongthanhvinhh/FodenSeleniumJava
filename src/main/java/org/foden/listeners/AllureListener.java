@@ -22,11 +22,6 @@ public class AllureListener implements ITestListener, ISuiteListener {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
     }
 
-//    @Attachment(value = "Screenshot", type = "image/png", fileExtension = ".png")
-//    public byte[] saveScreenshotPNG() {
-//        return ((TakesScreenshot) WebDriverProvider.getDriver()).getScreenshotAs(OutputType.BYTES);
-//    }
-
     @Attachment(value = "screenshot", type = "image/png", fileExtension = ".png")
     public byte[] saveScreenshotPNG() {
         return ((TakesScreenshot) Objects.requireNonNull(WebDriverProvider.getDriver())).getScreenshotAs(OutputType.BYTES);
