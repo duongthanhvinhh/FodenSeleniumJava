@@ -5,6 +5,7 @@ import org.foden.api.models.request.LoginRequest;
 import org.foden.api.models.request.SignUpRequest;
 import org.foden.api.models.response.LoginResponse;
 import org.foden.api.services.AuthService;
+import org.foden.utils.FakerUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,8 +24,8 @@ public class AuthApisTests {
 
     @Test(description = "Verify the SignUp API is working")
     public void signUpTest(){
-        SignUpRequest signUpRequest = new SignUpRequest.Builder().username("Foden1112").password("Password@01").email("test1112@gmail.com").firstName("Foden")
-                .lastName("Duong").mobileNumber("0917126127"). build();
+        SignUpRequest signUpRequest = new SignUpRequest.Builder().username(FakerUtils.getFakerInstance().name().fullName()).password("Password@01").email(FakerUtils.getFakerInstance().internet().emailAddress()).firstName("Foden")
+                .lastName("Duong").mobileNumber(FakerUtils.getFakerInstance().phoneNumber().phoneNumber()). build();
         AuthService authService = new AuthService();
         Response response = authService.signUp(signUpRequest);
         Assert.assertEquals(response.getStatusCode(), 200);
